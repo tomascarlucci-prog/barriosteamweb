@@ -532,3 +532,29 @@ img, video, iframe {
     gap: 10px;
   }
 }
+/* ==========================================
+   AJUSTES PARA CELULARES (Pantallas chicas)
+   ========================================== */
+@media (max-width: 768px) {
+  .hero-carousel {
+    height: 70vh; /* Bajamos un poquito el alto total del banner en celular */
+    min-height: 400px;
+  }
+
+  .hero-text {
+    background: rgba(0, 0, 0, 0.35); /* Fondo negro mucho más transparente (¡se ve la foto!) */
+    backdrop-filter: blur(3px);      /* Efecto blur sutil para que el texto resalte */
+    padding: 20px 15px;             /* Menos relleno interno para que no sea tan gigante */
+    width: 92%;                     /* Se adapta mejor al ancho del celu */
+    border-width: 1px;              /* Achicamos un poco el borde rojo para que sea más fino */
+  }
+
+  .hero-text h2 {
+    font-size: 1.5rem;              /* Letra del título más chica en celu */
+    margin-bottom: 8px;
+  }
+
+  .hero-text p {
+    font-size: 0.95rem;             /* Letra del párrafo más chica en celu */
+  }
+}
