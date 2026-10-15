@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Barrios Team</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+    <div class="admin-container" id="login-section">
+        <h2>Ingreso Administrador</h2>
+        <input type="text" id="username" placeholder="Usuario" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+        <input type="password" id="password" placeholder="Contraseña" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+        <button onclick="login()" style="width: 100%; padding: 10px; background: #000; color: white; cursor: pointer;">Entrar</button>
+    </div>
+
+    <div class="admin-container hidden" id="panel-section">
+        <h2>Panel de Control - Alumnos</h2>
+        <button onclick="cerrarSesion()" style="float: right; margin-bottom: 10px;">Cerrar Sesión</button>
+        
+        <h3>Añadir Nuevo Alumno</h3>
+        <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
+            <input type="text" id="nuevo_nombre" placeholder="Nombre">
+            <input type="text" id="nuevo_apellido" placeholder="Apellido">
+            <input type="date" id="nuevo_pago" title="Fecha de Pago">
+            <input type="date" id="nuevo_vencimiento" title="Fecha de Vencimiento">
+            <button onclick="agregarAlumno()" style="background: #000; color: white; padding: 5px 10px;">Añadir</button>
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Fecha de Pago</th>
+                    <th>Vencimiento</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-alumnos">
+                <!-- Se llena con JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <script src="js/admin.js"></script>
+</body>
+</html>

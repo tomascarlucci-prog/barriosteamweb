@@ -1,0 +1,534 @@
+/* Configuraciones generales */
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; color: #333; }
+h1, h2, h3 { text-align: center; text-transform: uppercase; }
+
+/* Barra de navegación */
+nav {
+    background-color: #000;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+    border-bottom: 3px solid #000;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+}
+nav a:hover { color: #ff0000; }
+.btn-admin-nav { background: #222; padding: 5px 12px; border-radius: 4px; border: 1px solid #ff0000; }
+
+/* Secciones generales */
+section {
+    padding: 60px 20px;
+    border-bottom: 5px solid #000;
+    background-color: #fff;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Presentación - Slideshow */
+#inicio {
+    position: relative;
+    height: 70vh;
+    overflow: hidden;
+    padding: 0;
+    border-bottom: 5px solid #000;
+}
+.slide {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 1.5s ease-in-out;
+    object-fit: cover;
+}
+.slide.active { opacity: 1; }
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    background: rgba(0,0,0,0.8);
+    padding: 25px;
+    border: 3px solid #000;
+    text-align: center;
+    z-index: 10;
+    border-radius: 8px;
+}
+
+/* Grillas */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+.media-box {
+    width: 100%;
+    border: 3px solid #000;
+    background: #000;
+    border-radius: 6px;
+    overflow: hidden;
+}
+.media-box img, .media-box video {
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+/* Sección Horarios */
+.horarios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+.horario-card {
+    background: #111;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    border: 2px solid #000;
+    text-align: center;
+}
+.horario-card h3 { color: #ff0000; margin-bottom: 10px; }
+
+/* Profesores Card */
+.card-profesores {
+    background: #f8f8f8;
+    border: 2px solid #000;
+    padding: 20px;
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Contacto y Botones */
+.botones-contacto {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin: 30px 0;
+    flex-wrap: wrap;
+}
+.btn {
+    padding: 12px 25px;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+    border: 2px solid #000;
+    display: inline-block;
+}
+.btn-wsp { background-color: #25D366; }
+.btn-ig { background-color: #E1306C; }
+.btn-mail { background-color: #D44638; }
+
+/* Botón flotante WhatsApp */
+.wsp-flotante {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #25D366;
+    color: white;
+    padding: 15px;
+    border-radius: 50%;
+    font-size: 28px;
+    text-decoration: none;
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.5);
+    z-index: 1000;
+    border: 2px solid #000;
+}
+
+/* Modal Admin */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.8);
+}
+.modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 25px;
+    border: 4px solid #000;
+    width: 90%;
+    max-width: 350px;
+    text-align: center;
+    position: relative;
+    border-radius: 8px;
+}
+.close-modal {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* ADMIN PANEL STYLES */
+.admin-container { max-width: 1000px; margin: 30px auto; padding: 20px; }
+.card-form { background: #222; padding: 20px; border-radius: 8px; border: 2px solid #333; margin-top: 20px; }
+.form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin: 15px 0; }
+.form-grid input { padding: 10px; border-radius: 4px; border: 1px solid #444; background: #333; color: white; }
+.btn-guardar { background: #25D366; color: white; padding: 12px; border: none; font-weight: bold; width: 100%; cursor: pointer; border-radius: 4px; }
+
+.tabla-admin { width: 100%; border-collapse: collapse; margin-top: 20px; background: #222; }
+.tabla-admin th, .tabla-admin td { border: 1px solid #444; padding: 12px; text-align: center; }
+.tabla-admin th { background: #000; color: white; }
+.estado-verde { background-color: #2e7d32; color: white; font-weight: bold; border-radius: 4px; padding: 5px; }
+.estado-rojo { background-color: #c62828; color: white; font-weight: bold; border-radius: 4px; padding: 5px; }
+.btn-notify-wsp { background: #25D366; color: white; text-decoration: none; padding: 6px 12px; border-radius: 4px; font-size: 0.85rem; font-weight: bold; display: inline-block; }
+/* --- BOTÓN FLOTANTE DE INSTAGRAM --- */
+.instagram-float {
+    position: fixed;
+    bottom: 95px; /* Ubicado arriba del botón de WhatsApp */
+    right: 25px;
+    background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+    color: #ffffff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    z-index: 1500;
+    text-decoration: none;
+    transition: transform 0.3s;
+}
+
+.instagram-float:hover {
+    transform: scale(1.1);
+}
+/* Grilla con videos de tamaño compacto - FORZADO */
+.video-grid {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    gap: 15px !important;
+    margin-top: 20px !important;
+}
+
+.video-item {
+    text-align: center !important;
+    width: 140px !important; /* Tamaño súper compacto ajustado */
+    max-width: 140px !important;
+    flex: 0 0 140px !important;
+}
+
+.video-item h4 {
+    margin-bottom: 6px !important;
+    font-size: 0.8rem !important;
+}
+
+.video-item video {
+    width: 140px !important;
+    max-width: 140px !important;
+    height: auto !important;
+    max-height: 220px !important;
+    border-radius: 6px !important;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+    display: block !important;
+    margin: 0 auto !important;
+}
+/* CARRUSEL HERO PRINCIPAL CON TRANSICIÓN SUAVE (FADE) */
+.hero-carousel {
+    position: relative;
+    width: 100%;
+    height: 80vh; /* Ocupa el 80% del alto de la pantalla (más grande) */
+    min-height: 500px;
+    overflow: hidden;
+    background-color: #000;
+}
+
+.hero-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 1.5s ease-in-out, visibility 1.5s ease-in-out; /* Fundido tenue */
+}
+
+.hero-slide.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.hero-bg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+}
+
+/* Filtro oscuro para que las letras resalten sobre las imágenes */
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.45);
+}
+
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffffff;
+    z-index: 10;
+    width: 90%;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.65);
+    padding: 30px 20px;
+    border-radius: 8px;
+    border: 2px solid #ff0000;
+}
+
+.hero-text h2 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.hero-text p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* Puntos de navegación */
+.hero-dots {
+    position: absolute;
+    bottom: 25px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 12px;
+    z-index: 20;
+}
+
+.hero-dot {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.hero-dot.active, .hero-dot:hover {
+    background-color: #ff0000;
+    transform: scale(1.2);
+}
+.btn-email {
+    background-color: #ea4335; /* Rojo característico de Gmail */
+    color: #ffffff;
+}
+
+.btn-email:hover {
+    background-color: #d93025; /* Un tono más oscuro al pasar el cursor */
+}
+/* --- ESTILOS SECCIÓN OPINIONES --- */
+.reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.review-card {
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 20px;
+    border-left: 4px solid #ea4335; /* Detalle de color en el borde */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.review-header {
+    margin-bottom: 10px;
+}
+
+.reviewer-info h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.stars {
+    color: #f4c430; /* Color dorado para las estrellas */
+    font-size: 1.2rem;
+    margin-top: 2px;
+}
+
+.review-text {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.5;
+    font-style: italic;
+    margin: 0;
+}
+
+.google-reviews-action {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.btn-google {
+    background-color: #4285f4; /* Azul de Google */
+    color: #ffffff;
+    display: inline-block;
+}
+
+.btn-google:hover {
+    background-color: #3367d6;
+}
+/* --- ESTILOS PARA LA GRILLA DE VIDEOS --- */
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+}
+
+.video-card {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.video-wrapper {
+    position: relative;
+    width: 100%;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #000;
+    margin-bottom: 15px;
+}
+
+.video-wrapper video {
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    display: block;
+    object-fit: cover;
+}
+
+.video-card h3 {
+    margin-top: 5px;
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+    color: #222;
+}
+
+.video-card p {
+    font-size: 0.95rem;
+    color: #555;
+    line-height: 1.4;
+    margin: 0;
+}
+/* Layout en grilla: 3 columnas en pantallas grandes, 1 en celulares */
+.video-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  max-width: 1000px; /* Controla el ancho total del bloque */
+  margin: 0 auto;    /* Centra la sección en la página */
+}
+
+/* Control del contenedor de cada tarjeta */
+.video-card {
+  max-width: 320px;   /* Tamaño máximo individual para cada tarjeta */
+  margin: 0 auto;     /* Centra las tarjetas */
+  width: 100%;
+}
+
+/* Ajuste del video para que no se salga de su marco */
+.video-wrapper video {
+  width: 100%;
+  height: auto;
+  max-height: 220px;  /* Limita el alto del reproductor */
+  object-fit: cover;  /* Mantiene buena proporción sin deformarse */
+  border-radius: 8px; /* Opcional: bordes redondeados */
+}
+/* Previene que las imágenes y videos desborden el celular */
+img, video, iframe {
+  max-width: 100%;
+  height: auto;
+}
+
+* {
+  box-sizing: border-box;
+}
+/* ==========================================
+   ESTILOS EXCLUSIVOS PARA CELULARES
+   ========================================== */
+@media (max-width: 768px) {
+
+  /* Ajustar márgenes y paddings generales */
+  body {
+    padding: 10px;
+  }
+
+  .section-card {
+    padding: 15px 10px !important;
+  }
+
+  /* Títulos más proporcionados al teléfono */
+  h1 { font-size: 1.8rem; }
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.2rem; }
+
+  /* Grillas a 1 sola columna en el celular */
+  .reviews-grid, 
+  .video-grid {
+    grid-template-columns: 1fr !important; /* Muestra una tarjeta debajo de la otra */
+    gap: 15px;
+  }
+
+  /* Ajuste de tarjetas de video / opiniones */
+  .video-card, 
+  .review-card {
+    max-width: 100% !important; /* Aprovecha todo el ancho del teléfono */
+    width: 100% !important;
+  }
+
+  /* Si tenés un menú horizontal, se acomoda en columna */
+  nav ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+}

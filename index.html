@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barrios Team - Gimnasio de Boxeo</title>
+    <!-- Iconos de FontAwesome para WhatsApp e Instagram -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* --- ESTILOS GENERALES --- */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #f4f6f9;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        /* --- BARRA DE NAVEGACIÓN --- */
+        header {
+            background-color: #1a1a1a;
+            border-bottom: 4px solid #e50914;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-decoration: none;
+        }
+
+        .logo span {
+            color: #e50914;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 14px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+        }
+
+        .nav-links a:hover {
+            background-color: #e50914;
+            color: #ffffff;
+        }
+
+        /* --- BOTONES --- */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: #e50914;
+            color: #ffffff;
+            padding: 10px 22px;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.2s, background-color 0.3s;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #b20710;
+            transform: translateY(-2px);
+        }
+
+        .btn-whatsapp {
+            background-color: #25d366;
+            color: #ffffff !important;
+        }
+
+        .btn-whatsapp:hover {
+            background-color: #1eb954;
+        }
+
+        .btn-instagram {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            color: #ffffff !important;
+        }
+
+        .btn-instagram:hover {
+            opacity: 0.9;
+        }
+
+        .btn-admin {
+            background-color: #444444;
+            color: #ffffff !important;
+        }
+
+        .btn-admin:hover {
+            background-color: #e50914 !important;
+        }
+
+        /* --- BOTÓN FLOTANTE DE WHATSAPP --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #25d366;
+            color: #ffffff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            z-index: 1500;
+            text-decoration: none;
+            transition: transform 0.3s;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- CARRUSEL DE PRESENTACIÓN --- */
+        .slider-container {
+            position: relative;
+            max-width: 1200px;
+            margin: 25px auto;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            border: 2px solid #ddd;
+        }
+
+        .slides {
+            display: flex;
+            transition: transform 0.6s ease-in-out;
+            width: 300%;
+        }
+
+        .slide {
+            width: 33.333%;
+            height: 380px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 20px;
+            color: #ffffff;
+        }
+
+        .slide-1 {
+            background: linear-gradient(135deg, #1a1a1a 0%, #d32f2f 100%);
+        }
+
+        .slide-2 {
+            background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #b91c1c 100%);
+        }
+
+        .slide-3 {
+            background: linear-gradient(135deg, #991b1b 0%, #111827 100%);
+        }
+
+        .slide-caption h2 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .slide-caption p {
+            font-size: 1.2rem;
+        }
+
+        .slider-nav {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            background-color: rgba(255, 255, 255, 0.5);
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background-color: #ffffff;
+            width: 28px;
+            border-radius: 10px;
+        }
+
+        /* --- SECCIONES Y CONTENIDO --- */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .section-card {
+            background-color: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            scroll-margin-top: 100px;
+        }
+
+        .section-card h2 {
+            color: #d32f2f;
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+            text-transform: uppercase;
+        }
+
+        .subtitle {
+            color: #666666;
+            margin-bottom: 20px;
+            font-style: italic;
+        }
+
+        /* GRID */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .card-box {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .card-box:hover {
+            transform: translateY(-4px);
+            border-color: #d32f2f;
+        }
+
+        .card-box h3 {
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .card-box p {
+            color: #4b5563;
+            font-size: 0.95rem;
+        }
+
+        /* TABLA DE HORARIOS */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: #ffffff;
+        }
+
+        th, td {
+            padding: 12px 15px;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        th {
+            background-color: #d32f2f;
+            color: white;
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9fafb;
+        }
+
+        /* FORMULARIO DE CONTACTO Y BOTONES SOCIALES */
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            text-align: left;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-group input, .form-group textarea {
+            padding: 12px;
+            background-color: #ffffff;
+            border: 1px solid #d1d5db;
+            border-radius: 5px;
+            color: #111827;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #d32f2f;
+        }
+
+        /* UBICACIÓN Y MAPA */
+        .location-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .location-info p {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #111827;
+        }
+
+        .map-container {
+            width: 100%;
+            height: 380px;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #d1d5db;
+            margin-top: 15px;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* MULTIMEDIA */
+        video {
+            width: 100%;
+            max-width: 700px;
+            border-radius: 6px;
+            border: 1px solid #d1d5db;
+            margin-top: 15px;
+            background-color: #000;
+        }
+
+        /* MODAL ADMIN */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.6);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            border-top: 5px solid #d32f2f;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            color: #6b7280;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-modal:hover {
+            color: #111827;
+        }
+
+        /* PIE DE PÁGINA */
+        footer {
+            background-color: #1a1a1a;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BOTÓN FLOTANTE DE WHATSAPP -->
+    <a href="https://wa.me/5491167046937?text=Hola!%20Quisiera%20pedir%20informaci%C3%B3n%20sobre%20las%20clases%20de%20boxeo" class="whatsapp-float" target="_blank" title="Escribinos por WhatsApp">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+<!-- BOTÓN FLOTANTE DE INSTAGRAM CON ESTILOS EN LÍNEA -->
+<a href="https://www.instagram.com/barriosteam_boxing" 
+   target="_blank" 
+   title="Seguinos en Instagram"
+   style="position: fixed !important; 
+          bottom: 95px !important; 
+          right: 25px !important; 
+          width: 60px !important; 
+          height: 60px !important; 
+          background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important; 
+          border-radius: 50% !important; 
+          display: flex !important; 
+          align-items: center !important; 
+          justify-content: center !important; 
+          box-shadow: 0 4px 15px rgba(0,0,0,0.4) !important; 
+          z-index: 999999 !important; 
+          text-decoration: none !important;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#ffffff" viewBox="0 0 16 16">
+        <path d="M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.9 3.9 0 0 0-1.417.923A3.9 3.9 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.9 3.9 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.9 3.9 0 0 0-.923-1.417A3.9 3.9 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0zm-.717 1.442h.718c2.136 0 2.389.007 3.232.046.78.035 1.204.166 1.486.275.373.145.64.319.92.599.28.28.453.546.598.92.11.281.24.705.275 1.485.039.843.047 1.096.047 3.231s-.008 2.389-.047 3.232c-.035.78-.166 1.203-.275 1.485a2.5 2.5 0 0 1-.599.919c-.28.28-.546.453-.92.598-.28.11-.704.24-1.485.276-.843.038-1.096.047-3.232.047s-2.39-.009-3.233-.047c-.78-.036-1.203-.166-1.485-.276a2.5 2.5 0 0 1-.92-.598 2.5 2.5 0 0 1-.6-.92c-.109-.281-.24-.705-.275-1.485-.038-.843-.046-1.096-.046-3.233s.008-2.388.046-3.231c.036-.78.166-1.204.276-1.486.145-.373.319-.64.599-.92.28-.28.546-.453.92-.598.282-.11.705-.24 1.485-.276.738-.034 1.024-.044 2.515-.045zm4.988 1.328a.96.96 0 1 0 0 1.92.96.96 0 0 0 0-1.92zm-4.27 1.23a4.001 4.001 0 1 0 0 8.003 4.001 4.001 0 0 0 0-8.003zm0 1.441a2.56 2.56 0 1 1 0 5.12 2.56 2.56 0 0 1 0-5.12z"/>
+    </svg>
+</a>
+
+
+    <!-- BARRA DE NAVEGACIÓN -->
+    <header>
+        <nav>
+            <a href="#inicio" class="logo">🥊 Barrios <span>Team</span></a>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#clases">Clases</a></li>
+                <li><a href="#competidores">Competidores</a></li>
+                <li><a href="#horarios">Horarios</a></li>
+                <li><a href="#profesores">Profesores</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+                <li><a href="#ubicacion">Ubicación</a></li>
+                <li><a href="#admin" id="openAdminModal" class="btn btn-admin">🔑 Admin</a></li>
+            </ul>
+        </nav>
+    </header>
+
+<!-- CARRUSEL DE PRESENTACIÓN (FOTOS ALEJADAS Y ENTERAS) -->
+<div id="inicio" style="position: relative; width: 100%; height: 85vh; min-height: 520px; overflow: hidden; background-color: #000;">
+    
+    <!-- Slide 1 -->
+    <div class="hero-slide active" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 1; transition: opacity 1.2s ease-in-out; z-index: 2; background-color: #000;">
+        <img src="fotoprincipal.jpg" alt="Barrios Team Principal" style="width: 100%; height: 100%; object-fit: contain; object-position: center center; padding: 15px 0; display: block;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.35); pointer-events: none;"></div>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #ffffff; z-index: 10; width: 90%; max-width: 750px; background: rgba(0, 0, 0, 0.75); padding: 25px 20px; border-radius: 8px; border: 2px solid #ff0000;">
+            <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #ffffff; text-transform: uppercase;">Gimnasio de Boxeo Barrios Team</h2>
+            <p style="font-size: 1.2rem; margin: 0;">Apto para todos los niveles: Profesional, Amateur y Principiante.</p>
+        </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="hero-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s ease-in-out; z-index: 1; background-color: #000;">
+        <img src="fotochinoespalda.jpg" alt="Entrenamiento de Alto Rendimiento" style="width: 100%; height: 100%; object-fit: contain; object-position: center center; padding: 15px 0; display: block;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.35); pointer-events: none;"></div>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #ffffff; z-index: 10; width: 90%; max-width: 750px; background: rgba(0, 0, 0, 0.75); padding: 25px 20px; border-radius: 8px; border: 2px solid #ff0000;">
+            <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #ffffff; text-transform: uppercase;">Entrenamiento de Alto Rendimiento</h2>
+            <p style="font-size: 1.2rem; margin: 0;">Superá tus límites con nuestros planes personalizados.</p>
+        </div>
+    </div>
+
+    <!-- Slide 3 -->
+    <div class="hero-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s ease-in-out; z-index: 1; background-color: #000;">
+        <img src="fotogustavoprincipal.jpg" alt="Formá parte de nuestro Equipo" style="width: 100%; height: 100%; object-fit: contain; object-position: center center; padding: 15px 0; display: block;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.35); pointer-events: none;"></div>
+        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #ffffff; z-index: 10; width: 90%; max-width: 750px; background: rgba(0, 0, 0, 0.75); padding: 25px 20px; border-radius: 8px; border: 2px solid #ff0000;">
+            <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #ffffff; text-transform: uppercase;">Formá parte de nuestro Equipo</h2>
+            <p style="font-size: 1.2rem; margin: 0;">Sumate a las clases grupales o individuales hoy mismo.</p>
+        </div>
+    </div>
+
+    <!-- PUNTOS INDICADORES -->
+    <div style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 20;">
+        <span class="hero-dot active" onclick="irASlideHero(0)" style="width: 14px; height: 14px; border-radius: 50%; background-color: #ff0000; cursor: pointer; display: inline-block;"></span>
+        <span class="hero-dot" onclick="irASlideHero(1)" style="width: 14px; height: 14px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.5); cursor: pointer; display: inline-block;"></span>
+        <span class="hero-dot" onclick="irASlideHero(2)" style="width: 14px; height: 14px; border-radius: 50%; background-color: rgba(255, 255, 255, 0.5); cursor: pointer; display: inline-block;"></span>
+    </div>
+
+</div>
+
+<!-- JAVASCRIPT DE CONTROL -->
+<script>
+let currentHeroIndex = 0;
+
+function mostrarHeroSlide(index) {
+    const slides = document.querySelectorAll('.hero-slide');
+    const dots = document.querySelectorAll('.hero-dot');
+    
+    if (!slides.length) return;
+
+    currentHeroIndex = (index + slides.length) % slides.length;
+
+    slides.forEach((slide, i) => {
+        if (i === currentHeroIndex) {
+            slide.style.opacity = '1';
+            slide.style.zIndex = '2';
+            slide.classList.add('active');
+        } else {
+            slide.style.opacity = '0';
+            slide.style.zIndex = '1';
+            slide.classList.remove('active');
+        }
+    });
+
+    dots.forEach((dot, i) => {
+        if (i === currentHeroIndex) {
+            dot.style.backgroundColor = '#ff0000';
+        } else {
+            dot.style.backgroundColor = 'rgba(255, 255, 255, 0.5)';
+        }
+    });
+}
+
+function irASlideHero(index) {
+    mostrarHeroSlide(index);
+    reiniciarHeroTimer();
+}
+
+let heroTimer;
+function reiniciarHeroTimer() {
+    clearInterval(heroTimer);
+    heroTimer = setInterval(() => {
+        mostrarHeroSlide(currentHeroIndex + 1);
+    }, 4500);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    reiniciarHeroTimer();
+});
+</script>
+
+    <div class="container">
+
+        <!-- SECCIÓN: CLASES PERSONALIZADAS -->
+        <section id="clases" class="section-card">
+            <h2>Clases Personalizadas , Grupales , Competitivas y Recreativas</h2>
+            <p class="subtitle">Adaptación particular y general específica según tus objetivos.</p>
+            <p>Trabajamos la técnica de boxeo, preparación física, coordinación, resistencia y la quema de calorías en un ambiente seguro y motivador.</p>
+            <br>
+<!-- SECCIÓN: VIDEOS DEMOSTRATIVOS -->
+<section class="section-card">
+    <h3>Videos Demostrativos de Entrenamiento</h3>
+    
+    <!-- Contenedor con carrusel/deslizamiento horizontal -->
+    <div style="display: flex; overflow-x: auto; gap: 15px; padding: 15px 5px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch;">
+        
+        <!-- Video 1 -->
+        <div style="flex: 0 0 280px; max-width: 85%; scroll-snap-align: center; text-align: center;">
+            <h4 style="margin-bottom: 8px; font-size: 1rem;">Entrenamiento Grupal</h4>
+            <video controls preload="metadata" style="width: 100%; height: 180px; object-fit: contain; background: #000; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); border: 2px solid #000;">
+                <source src="entrenamientogrupal.mp4" type="video/mp4">
+                Tu navegador no soporta el formato de video.
+            </video>
+        </div>
+
+        <!-- Video 2 -->
+        <div style="flex: 0 0 280px; max-width: 85%; scroll-snap-align: center; text-align: center;">
+            <h4 style="margin-bottom: 8px; font-size: 1rem;">Clase Personalizada</h4>
+            <video controls preload="metadata" style="width: 100%; height: 180px; object-fit: contain; background: #000; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); border: 2px solid #000;">
+                <source src="personalizada.mp4" type="video/mp4">
+                Tu navegador no soporta el formato de video.
+            </video>
+        </div>
+
+        <!-- Video 3 -->
+        <div style="flex: 0 0 280px; max-width: 85%; scroll-snap-align: center; text-align: center;">
+            <h4 style="margin-bottom: 8px; font-size: 1rem;">Técnica</h4>
+            <video controls preload="metadata" style="width: 100%; height: 180px; object-fit: contain; background: #000; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); border: 2px solid #000;">
+                <source src="tecnica.mp4" type="video/mp4">
+                Tu navegador no soporta el formato de video.
+            </video>
+        </div>
+
+        <!-- Video 4 -->
+        <div style="flex: 0 0 280px; max-width: 85%; scroll-snap-align: center; text-align: center;">
+            <h4 style="margin-bottom: 8px; font-size: 1rem;">Técnica Femenino</h4>
+            <video controls preload="metadata" style="width: 100%; height: 180px; object-fit: contain; background: #000; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.3); border: 2px solid #000;">
+                <source src="tecnicafemenino.mp4" type="video/mp4">
+                Tu navegador no soporta el formato de video.
+            </video>
+        </div>
+
+    </div>
+</section>
+
+    </div>
+</section>
+<!-- SECCIÓN: COMPETIDORES (DEMOSTRACIÓN DE ENTRADA EN CALOR Y POTENCIA) -->
+<section id="competidores" class="section-card">
+    <h2>Equipo de Competidores</h2>
+    <p class="subtitle">Atletas en preparación para torneos. Así entrenan la movilidad, potencia y entrada en calor nuestros peleadores.</p>
+    
+    <!-- Contenedor alineado uno al lado del otro -->
+    <div style="display: flex; overflow-x: auto; gap: 20px; padding: 15px 5px; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; justify-content: center; flex-wrap: wrap;">
+        
+        <!-- Video 1: Santi -->
+        <div class="card-box video-card" style="flex: 0 0 280px; max-width: 280px; scroll-snap-align: center; text-align: center;">
+            <div class="video-wrapper">
+                <video controls preload="metadata" poster="" style="width: 100%; height: 180px; object-fit: contain; background: #000; border-radius: 8px;">
+                    <source src="santicompetencia.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+            <h3 style="margin-top: 10px; font-size: 1.1rem;">Santi - Entrada en Calor</h3>
+            <p style="font-size: 0.9rem;">Trabajo específico de movilidad articular, activación neuromuscular y ritmo de combate previo al guanteo.</p>
+        </div>
+
+        <!-- Video 2: Blas -->
+        <div class="card-box video-card" style="flex: 0 0 280px; max-width: 280px; scroll-snap-align: center; text-align: center;">
+            <div class="video-wrapper">
+                <video controls preload="metadata" poster="" style="width: 100%; height: 180px; object-fit: contain; background: #000; border-radius: 8px;">
+                    <source src="blascompetencia.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+            <h3 style="margin-top: 10px; font-size: 1.1rem;">Blas - Potencia y Pliometría</h3>
+            <p style="font-size: 0.9rem;">Ejercicios de transferencia de fuerza explícita y aceleración aplicados al golpeo en alta intensidad.</p>
+        </div>
+
+        <!-- Video 3: Chica Competencia -->
+        <div class="card-box video-card" style="flex: 0 0 280px; max-width: 280px; scroll-snap-align: center; text-align: center;">
+            <div class="video-wrapper">
+                <video controls preload="metadata" poster="" style="width: 100%; height: 180px; object-fit: contain; background: #000; border-radius: 8px;">
+                    <source src="chicacompetencia.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de video.
+                </video>
+            </div>
+            <h3 style="margin-top: 10px; font-size: 1.1rem;">Acondicionamiento Femenino</h3>
+            <p style="font-size: 0.9rem;">Acondicionamiento aeróbico y dinamismo para competidoras en preparación de circuito competitivo.</p>
+        </div>
+
+    </div>
+</section>
+
+       <!-- SECCIÓN: HORARIOS -->
+<section id="horarios" class="section-card">
+    <h2>Horarios de Clases</h2>
+    <p class="subtitle">Elegí el turno que mejor se adapte a tu rutina diaria.</p>
+    <div class="table-responsive">
+        <table>
+            <thead>
+                <tr>
+                    <th>Turno</th>
+                    <th>Días</th>
+                    <th>Horarios</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Mañana</td>
+                    <td>Lunes y Miércoles<br>Viernes</td>
+                    <td>09:00 Hs<br>08:00 Hs</td>
+                </tr>
+                <tr>
+                    <td>Tarde</td>
+                    <td>Lunes, Miércoles y Viernes</td>
+                    <td>18:00 Hs</td>
+                </tr>
+                <tr>
+                    <td>Noche</td>
+                    <td>Lunes, Miércoles y Viernes</td>
+                    <td>1º Clase: 19:00 Hs<br>2º Clase: 20:30 Hs</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+
+        <!-- SECCIÓN: PROFESORES -->
+<section id="profesores" class="section-card">
+    <h2>Nuestros Profesores</h2>
+    <p class="subtitle">Entrenadores certificados con amplia trayectoria en el ring.</p>
+    <div class="grid-3">
+        <div class="card-box" style="text-align: center;">
+            <h3>Prof. Jose Luis Barrios</h3>
+            <img src="fotochinodt.jpg" alt="Prof. Jose Luis Barrios" style="width: 100%; max-width: 250px; height: auto; border-radius: 8px; margin: 10px 0; border: 2px solid #000;">
+            <p>Director Técnico Principal. Ex-boxeador con más de 15 años formando campeones regionales.</p>
+        </div>
+        <div class="card-box" style="text-align: center;">
+            <h3>Prof. Gustavo Barrios</h3>
+            <img src="fotogustavodt.jpg" alt="Prof. Gustavo Barrios" style="width: 100%; max-width: 250px; height: auto; border-radius: 8px; margin: 10px 0; border: 2px solid #000;">
+            <p>Técnico FAB especializado en preparación física, movilidad, potencia, pliometría y acondicionamiento aeróbico.</p>
+        </div>
+    </div>
+</section>
+
+<!-- SECCIÓN: TESTIMONIOS Y OPINIONES DE GOOGLE -->
+<section id="opiniones" class="section-card" style="padding: 30px 15px;">
+    <h2>Opiniones de Nuestros Alumnos</h2>
+    <p class="subtitle">Lo que dicen quienes entrenan día a día en Barrios Team en Ramos Mejía.</p>
+
+    <div class="reviews-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 25px;">
+        
+        <!-- Reseña 1 -->
+        <div class="review-card" style="background: #1e1e1e; color: #fff; padding: 22px; border-radius: 12px; border-left: 5px solid #ff1744; box-shadow: 0 6px 15px rgba(0,0,0,0.25);">
+            <div class="review-header">
+                <div class="reviewer-info">
+                    <h3 style="margin: 0 0 4px 0; font-size: 1.15rem; color: #fff;">Mariano González</h3>
+                    <div class="stars" style="color: #ffc107; font-size: 1.1rem; margin-bottom: 10px;">★★★★★</div>
+                </div>
+            </div>
+            <p class="review-text" style="font-style: italic; color: #d1d1d1; margin: 0; line-height: 1.5;">"Excelente lugar para entrenar boxeo. La dedicación del profe Roberto y la buena onda del grupo hacen que te superes clase a clase. Muy recomendable para todos los niveles."</p>
+        </div>
+
+        <!-- Reseña 2 -->
+        <div class="review-card" style="background: #1e1e1e; color: #fff; padding: 22px; border-radius: 12px; border-left: 5px solid #ff1744; box-shadow: 0 6px 15px rgba(0,0,0,0.25);">
+            <div class="review-header">
+                <div class="reviewer-info">
+                    <h3 style="margin: 0 0 4px 0; font-size: 1.15rem; color: #fff;">Lucía Fernández</h3>
+                    <div class="stars" style="color: #ffc107; font-size: 1.1rem; margin-bottom: 10px;">★★★★★</div>
+                </div>
+            </div>
+            <p class="review-text" style="font-style: italic; color: #d1d1d1; margin: 0; line-height: 1.5;">"Arranqué sin saber nada y desde el primer día me hicieron sentir re cómoda. Excelente técnica, preparación física completa y ambiente de diez. ¡El mejor gim de la zona!"</p>
+        </div>
+
+        <!-- Reseña 3 -->
+        <div class="review-card" style="background: #1e1e1e; color: #fff; padding: 22px; border-radius: 12px; border-left: 5px solid #ff1744; box-shadow: 0 6px 15px rgba(0,0,0,0.25);">
+            <div class="review-header">
+                <div class="reviewer-info">
+                    <h3 style="margin: 0 0 4px 0; font-size: 1.15rem; color: #fff;">Gonzalo Benítez</h3>
+                    <div class="stars" style="color: #ffc107; font-size: 1.1rem; margin-bottom: 10px;">★★★★★</div>
+                </div>
+            </div>
+            <p class="review-text" style="font-style: italic; color: #d1d1d1; margin: 0; line-height: 1.5;">"Gran entrenamiento de potencia y movilidad. Se nota la experiencia del técnico FAB. Si buscás boxeo de verdad y disciplina, este es el lugar."</p>
+        </div>
+
+        <!-- Reseña 4 -->
+        <div class="review-card" style="background: #1e1e1e; color: #fff; padding: 22px; border-radius: 12px; border-left: 5px solid #ff1744; box-shadow: 0 6px 15px rgba(0,0,0,0.25);">
+            <div class="review-header">
+                <div class="reviewer-info">
+                    <h3 style="margin: 0 0 4px 0; font-size: 1.15rem; color: #fff;">Camila Rossi</h3>
+                    <div class="stars" style="color: #ffc107; font-size: 1.1rem; margin-bottom: 10px;">★★★★★</div>
+                </div>
+            </div>
+            <p class="review-text" style="font-style: italic; color: #d1d1d1; margin: 0; line-height: 1.5;">"Buscaba un lugar para hacer acondicionamiento físico y liberarme del estrés del día. Las clases son súper dinámicas e intensas. ¡Súper recomendado en Ramos!"</p>
+        </div>
+
+        <!-- Reseña 5 -->
+        <div class="review-card" style="background: #1e1e1e; color: #fff; padding: 22px; border-radius: 12px; border-left: 5px solid #ff1744; box-shadow: 0 6px 15px rgba(0,0,0,0.25);">
+            <div class="review-header">
+                <div class="reviewer-info">
+                    <h3 style="margin: 0 0 4px 0; font-size: 1.15rem; color: #fff;">Nicolás Romero</h3>
+                    <div class="stars" style="color: #ffc107; font-size: 1.1rem; margin-bottom: 10px;">★★★★★</div>
+                </div>
+            </div>
+            <p class="review-text" style="font-style: italic; color: #d1d1d1; margin: 0; line-height: 1.5;">"Entrenamiento de primer nivel en Julio A. Roca. Equipamiento completo, buena exigencia y un ambiente muy compañero. 10 de 10."</p>
+        </div>
+
+        <!-- Reseña 6 -->
+        <div class="review-card" style="background: #1e1e1e; color: #fff; padding: 22px; border-radius: 12px; border-left: 5px solid #ff1744; box-shadow: 0 6px 15px rgba(0,0,0,0.25);">
+            <div class="review-header">
+                <div class="reviewer-info">
+                    <h3 style="margin: 0 0 4px 0; font-size: 1.15rem; color: #fff;">Florencia Suárez</h3>
+                    <div class="stars" style="color: #ffc107; font-size: 1.1rem; margin-bottom: 10px;">★★★★★</div>
+                </div>
+            </div>
+            <p class="review-text" style="font-style: italic; color: #d1d1d1; margin: 0; line-height: 1.5;">"Súper conforme con las clases. Mucha atención personalizada en la técnica de golpeo y la movilidad. ¡Da gusto ir a entrenar!"</p>
+        </div>
+    </div>
+
+    <!-- BOTÓN PARA VER O DEJAR RESEÑA EN GOOGLE MAPS -->
+    <div class="google-reviews-action" style="text-align: center; margin-top: 30px;">
+        <a href="https://maps.google.com/?q=Julio+Argentino+Roca+824+Ramos+Mejia" target="_blank" class="btn btn-google" style="display: inline-block; background-color: #ff1744; color: #ffffff; padding: 12px 24px; border-radius: 30px; text-decoration: none; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
+            <i class="fab fa-google"></i> Ver más opiniones en Google Maps
+        </a>
+    </div>
+</section>
+
+<!-- SECCIÓN: UBICACIÓN Y MAPA -->
+<section id="ubicacion" class="section-card">
+    <h2>Ubicación del Gimnasio</h2>
+    <div class="location-info">
+        <p>📍 Dirección: Julio Argentino Roca 824, Ramos Mejía, Provincia de Buenos Aires</p>
+    </div>
+    
+    <div class="map-container" style="border-radius: 12px; overflow: hidden; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        <iframe 
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3282.261947230554!2d-58.5636021!3d-34.6481282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x95bcc63198f1f727%3A0xb2147ff22bc21271!2sJulio%20Argentino%20Roca%20824%2C%20B1704%20Ramos%20Mej%C3%ADa%2C%20Provincia%20de%20Buenos%20Aires!5e0!3m2!1ses-419!2sar!4v1710000000000!5m2!1ses-419!2sar" 
+            style="width: 100%; height: 350px; border: 0;"
+            allowfullscreen="" 
+            loading="lazy" 
+            referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+</section>
+
+<!-- SECCIÓN: CONTACTO -->
+        <section id="contacto" class="section-card">
+            <h2>Contacto Directo</h2>
+            <p class="subtitle">Escribinos por WhatsApp, seguinos en Instagram o envianos un correo.</p>
+            
+            <!-- BOTONES DE CONTACTO DIRECTO -->
+            <div class="contact-buttons">
+                <a href="https://wa.me/5491167046937?text=Hola!%20Quisiera%20pedir%20informaci%C3%B3n%20sobre%20las%20clases%20de%20boxeo" target="_blank" class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp (11 6704-6937)
+                </a>
+                <a href="https://www.instagram.com/barriosteam_boxing" target="_blank" class="btn btn-instagram">
+                    <i class="fab fa-instagram"></i> Instagram (@barriosteam_boxing)
+                </a>
+                <a href="mailto:gustavobarriosroberto@gmail.com?subject=Consulta%20sobre%20clases%20de%20boxeo" class="btn btn-email">
+                    <i class="fas fa-envelope"></i> Email (gustavobarriosroberto@gmail.com)
+                </a>
+            </div>
+
+            <form class="contact-form" onsubmit="alert('¡Gracias por comunicarte con Barrios Team! Te responderemos a la brevedad.'); return false;">
+                <div class="form-group">
+                    <label for="nombre">Nombre y Apellido:</label>
+                    <input type="text" id="nombre" placeholder="Ej. Juan Pérez" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono / WhatsApp:</label>
+                    <input type="tel" id="telefono" placeholder="Ej. 11 1234-5678" required>
+                </div>
+                <div class="form-group">
+                    <label for="mensaje">Mensaje o Consulta:</label>
+                    <textarea id="mensaje" rows="4" placeholder="¿En qué horario querés entrenar?" required></textarea>
+                </div>
+                <button type="submit" class="btn">Enviar Consulta</button>
+            </form>
+        </section>
+
+      
+
+    </div>
+
+    <!-- MODAL POPUP ADMIN -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeAdminModal">&times;</span>
+            <h2 style="color:#d32f2f; margin-bottom: 15px; text-align: center;">Acceso Administrador</h2>
+            <form onsubmit="alert('Sesión iniciada correctamente'); closeModal(); return false;">
+                <div class="form-group" style="margin-bottom: 15px;">
+                    <label>Usuario:</label>
+                    <input type="text" placeholder="Usuario admin" required>
+                </div>
+                <div class="form-group" style="margin-bottom: 20px;">
+                    <label>Contraseña:</label>
+                    <input type="password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="btn" style="width: 100%;">Ingresar al Panel</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Barrios Team - Gimnasio de Boxeo. Ramos Mejía, Buenos Aires.</p>
+    </footer>
+
+    <!-- JAVASCRIPT -->
+    <script>
+        // --- CARRUSEL ---
+        let currentSlide = 0;
+        const slides = document.getElementById('slides');
+        const dots = document.querySelectorAll('.dot');
+
+        function goToSlide(index) {
+            currentSlide = index;
+            slides.style.transform = `translateX(-${currentSlide * 33.333}%)`;
+            
+            dots.forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === currentSlide);
+            });
+        }
+
+        setInterval(() => {
+            currentSlide = (currentSlide + 1) % 3;
+            goToSlide(currentSlide);
+        }, 4000);
+
+        // --- MODAL DE ADMIN ---
+        const modal = document.getElementById('adminModal');
+        const btnOpen = document.getElementById('openAdminModal');
+        const btnClose = document.getElementById('closeAdminModal');
+
+        btnOpen.addEventListener('click', (e) => {
+            e.preventDefault();
+            modal.style.display = 'flex';
+        });
+
+        function closeModal() {
+            modal.style.display = 'none';
+        }
+
+        btnClose.addEventListener('click', closeModal);
+
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>
