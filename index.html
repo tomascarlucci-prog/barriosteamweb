@@ -500,11 +500,30 @@
 <!-- CARRUSEL DE PRESENTACIÓN (FOTOS ALEJADAS Y ENTERAS) -->
 <div id="inicio" style="position: relative; width: 100%; height: 85vh; min-height: 520px; overflow: hidden; background-color: #000;">
     
+    <!-- ESTILOS ADAPTATIVOS PARA CELULARES DE ESTE BLOQUE -->
+    <style>
+        @media (max-width: 768px) {
+            .hero-box-text {
+                padding: 15px 12px !important;
+                width: 94% !important;
+                border-width: 1px !important;
+            }
+            .hero-box-text h2 {
+                font-size: 1.3rem !important;
+                margin-bottom: 6px !important;
+            }
+            .hero-box-text p {
+                font-size: 0.85rem !important;
+            }
+        }
+    </style>
+
     <!-- Slide 1 -->
     <div class="hero-slide active" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 1; transition: opacity 1.2s ease-in-out; z-index: 2; background-color: #000;">
         <img src="fotoprincipal.jpg" alt="Barrios Team Principal" style="width: 100%; height: 100%; object-fit: contain; object-position: center center; padding: 15px 0; display: block;">
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.35); pointer-events: none;"></div>
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #ffffff; z-index: 10; width: 90%; max-width: 750px; background: rgba(0, 0, 0, 0.75); padding: 25px 20px; border-radius: 8px; border: 2px solid #ff0000;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.25); pointer-events: none;"></div>
+        <!-- ACÁ SACAMOS EL BLUR Y OSCURECEMOS UN POCO EL FONDO A 0.45 -->
+        <div class="hero-box-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #ffffff; z-index: 10; width: 90%; max-width: 750px; background: rgba(0, 0, 0, 0.45); padding: 25px 20px; border-radius: 8px; border: 2px solid #ff0000;">
             <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #ffffff; text-transform: uppercase;">Gimnasio de Boxeo Barrios Team</h2>
             <p style="font-size: 1.2rem; margin: 0;">Apto para todos los niveles: Profesional, Amateur y Principiante.</p>
         </div>
@@ -513,8 +532,9 @@
     <!-- Slide 2 -->
     <div class="hero-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s ease-in-out; z-index: 1; background-color: #000;">
         <img src="fotochinoespalda.jpg" alt="Entrenamiento de Alto Rendimiento" style="width: 100%; height: 100%; object-fit: contain; object-position: center center; padding: 15px 0; display: block;">
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.35); pointer-events: none;"></div>
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #ffffff; z-index: 10; width: 90%; max-width: 750px; background: rgba(0, 0, 0, 0.75); padding: 25px 20px; border-radius: 8px; border: 2px solid #ff0000;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.25); pointer-events: none;"></div>
+        <!-- ACÁ SACAMOS EL BLUR Y OSCURECEMOS UN POCO EL FONDO A 0.45 -->
+        <div class="hero-box-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #ffffff; z-index: 10; width: 90%; max-width: 750px; background: rgba(0, 0, 0, 0.45); padding: 25px 20px; border-radius: 8px; border: 2px solid #ff0000;">
             <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #ffffff; text-transform: uppercase;">Entrenamiento de Alto Rendimiento</h2>
             <p style="font-size: 1.2rem; margin: 0;">Superá tus límites con nuestros planes personalizados.</p>
         </div>
@@ -523,8 +543,9 @@
     <!-- Slide 3 -->
     <div class="hero-slide" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.2s ease-in-out; z-index: 1; background-color: #000;">
         <img src="fotogustavoprincipal.jpg" alt="Formá parte de nuestro Equipo" style="width: 100%; height: 100%; object-fit: contain; object-position: center center; padding: 15px 0; display: block;">
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.35); pointer-events: none;"></div>
-        <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #ffffff; z-index: 10; width: 90%; max-width: 750px; background: rgba(0, 0, 0, 0.75); padding: 25px 20px; border-radius: 8px; border: 2px solid #ff0000;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.25); pointer-events: none;"></div>
+        <!-- ACÁ SACAMOS EL BLUR Y OSCURECEMOS UN POCO EL FONDO A 0.45 -->
+        <div class="hero-box-text" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); text-align: center; color: #ffffff; z-index: 10; width: 90%; max-width: 750px; background: rgba(0, 0, 0, 0.45); padding: 25px 20px; border-radius: 8px; border: 2px solid #ff0000;">
             <h2 style="font-size: 2.2rem; margin-bottom: 10px; color: #ffffff; text-transform: uppercase;">Formá parte de nuestro Equipo</h2>
             <p style="font-size: 1.2rem; margin: 0;">Sumate a las clases grupales o individuales hoy mismo.</p>
         </div>
@@ -538,6 +559,7 @@
     </div>
 
 </div>
+<!-- (El resto del código JavaScript y las secciones siguientes quedan igual que antes) -->
 
 <!-- JAVASCRIPT DE CONTROL -->
 <script>
@@ -590,14 +612,14 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 
-    <div class="container">
+<div class="container">
 
-        <!-- SECCIÓN: CLASES PERSONALIZADAS -->
-        <section id="clases" class="section-card">
-            <h2>Clases Personalizadas , Grupales , Competitivas y Recreativas</h2>
-            <p class="subtitle">Adaptación particular y general específica según tus objetivos.</p>
-            <p>Trabajamos la técnica de boxeo, preparación física, coordinación, resistencia y la quema de calorías en un ambiente seguro y motivador.</p>
-            <br>
+    <!-- SECCIÓN: CLASES PERSONALIZADAS -->
+    <section id="clases" class="section-card">
+        <h2>Clases Personalizadas , Grupales , Competitivas y Recreativas</h2>
+        <p class="subtitle">Adaptación particular y general específica según tus objetivos.</p>
+        <p>Trabajamos la técnica de boxeo, preparación física, coordinación, resistencia y la quema de calorías en un ambiente seguro y motivador.</p>
+        <br>
 <!-- SECCIÓN: VIDEOS DEMOSTRATIVOS -->
 <section class="section-card">
     <h3>Videos Demostrativos de Entrenamiento</h3>
