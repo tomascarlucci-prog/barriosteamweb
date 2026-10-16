@@ -533,41 +533,57 @@ img, video, iframe {
   }
 }
 /* ==========================================
+   CARTEL PRINCIPAL (HERO TEXT) - COMPUTADORA Y GENERAL
+   ========================================== */
+.hero-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #ffffff;
+    z-index: 10;
+    width: 90%;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.3) !important; /* Fondo translúcido para ver la foto */
+    backdrop-filter: blur(4px);                  /* Desenfoque elegante estilo vidrio */
+    -webkit-backdrop-filter: blur(4px);          /* Compatibilidad para Safari / iPhone */
+    padding: 35px 25px;
+    border-radius: 8px;
+    border: 2px solid #ff0000;
+}
+
+.hero-text h2 {
+    font-size: 2.2rem;
+    margin-bottom: 12px;
+    color: #ffffff;
+    text-transform: uppercase;
+}
+
+.hero-text p {
+    font-size: 1.2rem;
+    margin: 0;
+}
+
+/* ==========================================
    AJUSTES PARA CELULARES (Pantallas chicas)
    ========================================== */
 @media (max-width: 768px) {
-  .hero-carousel {
-    height: 70vh; /* Bajamos un poquito el alto total del banner en celular */
-    min-height: 400px;
-  }
-
   .hero-text {
-    background: rgba(0, 0, 0, 0.35); /* Fondo negro mucho más transparente (¡se ve la foto!) */
-    backdrop-filter: blur(3px);      /* Efecto blur sutil para que el texto resalte */
-    padding: 20px 15px;             /* Menos relleno interno para que no sea tan gigante */
-    width: 92%;                     /* Se adapta mejor al ancho del celu */
-    border-width: 1px;              /* Achicamos un poco el borde rojo para que sea más fino */
+    background: rgba(0, 0, 0, 0.35) !important; /* Ligeramente más cubierto en celu para que se lea mejor */
+    backdrop-filter: blur(3px) !important;
+    -webkit-backdrop-filter: blur(3px) !important;
+    padding: 18px 12px !important;
+    width: 92% !important;
+    border-width: 1px !important;              /* Borde más fino para que no ocupe lugar visual */
   }
 
   .hero-text h2 {
-    font-size: 1.5rem;              /* Letra del título más chica en celu */
-    margin-bottom: 8px;
+    font-size: 1.35rem !important;             /* Letra más chica para que entre cómodo en el celu */
+    margin-bottom: 6px !important;
   }
 
   .hero-text p {
-    font-size: 0.95rem;             /* Letra del párrafo más chica en celu */
-  }
-}
-/* Esto afecta a cualquier celular y tablet de menos de 1024px de ancho */
-@media (max-width: 1024px) {
-  .hero-text {
-    background: rgba(0, 0, 0, 0.35) !important;
-    backdrop-filter: blur(3px);
-    padding: 20px 15px;
-    width: 92%;
-    border-width: 1px;
-  }
-  .hero-text h2 {
-    font-size: 1.6rem;
+    font-size: 0.9rem !important;              /* Párrafo más chico para que no tape la foto */
   }
 }
