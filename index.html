@@ -782,7 +782,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="stars" style="color: #ffc107; font-size: 1.1rem; margin-bottom: 10px;">★★★★★</div>
                 </div>
             </div>
-            <p class="review-text" style="font-style: italic; color: #d1d1d1; margin: 0; line-height: 1.5;">"Excelente lugar para entrenar boxeo. La dedicación del profe Roberto y la buena onda del grupo hacen que te superes clase a clase. Muy recomendable para todos los niveles."</p>
+            <p class="review-text" style="font-style: italic; color: #d1d1d1; margin: 0; line-height: 1.5;">"Excelente lugar para entrenar boxeo. La dedicación del profe Gustavo y la buena onda del grupo hacen que te superes clase a clase. Muy recomendable para todos los niveles."</p>
         </div>
 
         <!-- Reseña 2 -->
@@ -826,7 +826,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="stars" style="color: #ffc107; font-size: 1.1rem; margin-bottom: 10px;">★★★★★</div>
                 </div>
             </div>
-            <p class="review-text" style="font-style: italic; color: #d1d1d1; margin: 0; line-height: 1.5;">"Entrenamiento de primer nivel en Julio A. Roca. Equipamiento completo, buena exigencia y un ambiente muy compañero. 10 de 10."</p>
+            <p class="review-text" style="font-style: italic; color: #d1d1d1; margin: 0; line-height: 1.5;">"Entrenamiento de primer nivel en Barrios team. Equipamiento completo, buena exigencia y un ambiente muy compañero. 10 de 10."</p>
         </div>
 
         <!-- Reseña 6 -->
@@ -929,8 +929,17 @@ document.addEventListener('DOMContentLoaded', () => {
         <p>&copy; 2026 Barrios Team - Gimnasio de Boxeo. Ramos Mejía, Buenos Aires.</p>
     </footer>
 
-    <!-- JAVASCRIPT -->
+   <!-- JAVASCRIPT -->
     <script>
+        // --- FORZAR INICIO ARRIBA AL CARGAR ---
+        window.addEventListener('DOMContentLoaded', () => {
+            window.scrollTo(0, 0);
+        });
+        
+        window.addEventListener('load', () => {
+            window.scrollTo(0, 0);
+        });
+
         // --- CARRUSEL ---
         let currentSlide = 0;
         const slides = document.getElementById('slides');
@@ -972,5 +981,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     </script>
+
 </body>
 </html>
