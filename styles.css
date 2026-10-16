@@ -558,3 +558,13 @@ img, video, iframe {
     font-size: 0.95rem;             /* Letra del párrafo más chica en celu */
   }
 }
+/* Pegar esto al final de tu CSS */
+@media (max-width: 768px) {
+  .hero-text {
+    background: rgba(0, 0, 0, 0.35) !important;
+    backdrop-filter: blur(3px);
+    padding: 20px 15px;
+    width: 92%;
+    border-width: 1px;
+  }
+}
