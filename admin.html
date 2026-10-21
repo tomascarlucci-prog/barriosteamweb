@@ -1,49 +1,124 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+    <link rel="manifest" href="manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Barrios Team</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="static/styles.css">
+    <style>
+        .hidden { display: none !important; }
+        .badge-red { background-color: #ff4d4d; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .badge-yellow { background-color: #ffcc00; color: black; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .badge-green { background-color: #2ec4b6; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
+        .btn-ws { background-color: #25d366; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; text-decoration: none; font-weight: bold; display: inline-block; margin-bottom: 5px;}
+        .btn-ws:hover { background-color: #1eb857; }
+        .btn-renovar { background-color: #4361ee; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; margin-bottom: 5px; }
+        .btn-renovar:hover { background-color: #3f37c9; }
+        .btn-danger { background-color: #e63946; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .admin-card { background: #f8f9fa; border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+        
+        /* Estilos del Dashboard de Contadores */
+        .dashboard-stats { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
+        .stat-card { flex: 1; min-width: 150px; padding: 15px; border-radius: 8px; font-weight: bold; text-align: center; font-size: 1.1em; display: flex; flex-direction: column; }
+        .stat-number { font-size: 1.8em; margin-top: 5px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+        th { background-color: #111; color: white; }
+    </style>
 </head>
 <body>
 
-    <div class="admin-container" id="login-section">
-        <h2>Ingreso Administrador</h2>
-        <input type="text" id="username" placeholder="Usuario" style="width: 100%; padding: 10px; margin-bottom: 10px;">
-        <input type="password" id="password" placeholder="Contraseña" style="width: 100%; padding: 10px; margin-bottom: 10px;">
-        <button onclick="login()" style="width: 100%; padding: 10px; background: #000; color: white; cursor: pointer;">Entrar</button>
-    </div>
-
-    <div class="admin-container hidden" id="panel-section">
-        <h2>Panel de Control - Alumnos</h2>
-        <button onclick="cerrarSesion()" style="float: right; margin-bottom: 10px;">Cerrar Sesión</button>
+    <!-- MODAL / SECCIÓN DE LOGIN -->
+    <div class="admin-container" id="login-section" style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
+        <h2 style="color:#d32f2f; text-align: center; margin-bottom: 15px;">Acceso Administrador</h2>
         
-        <h3>Añadir Nuevo Alumno</h3>
-        <div style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-            <input type="text" id="nuevo_nombre" placeholder="Nombre">
-            <input type="text" id="nuevo_apellido" placeholder="Apellido">
-            <input type="date" id="nuevo_pago" title="Fecha de Pago">
-            <input type="date" id="nuevo_vencimiento" title="Fecha de Vencimiento">
-            <button onclick="agregarAlumno()" style="background: #000; color: white; padding: 5px 10px;">Añadir</button>
+        <div style="margin-bottom: 15px;">
+            <label>Usuario:</label>
+            <input type="text" id="username" placeholder="Usuario admin" style="width: 100%; padding: 10px; margin-top: 5px;">
+        </div>
+        <div style="margin-bottom: 20px;">
+            <label>Contraseña:</label>
+            <input type="password" id="password" placeholder="••••••••" style="width: 100%; padding: 10px; margin-top: 5px;" onkeypress="if(event.key === 'Enter') loginAdmin()">
+        </div>
+        <button type="button" onclick="loginAdmin()" class="btn" style="width: 100%; padding: 10px; background: #000; color: white; cursor: pointer; font-weight: bold;">Ingresar al Panel</button>
+    </div>
+    
+    <!-- PANEL DE CONTROL PRINCIPAL -->
+    <div class="admin-container hidden" id="panel-section" style="max-width: 1200px; margin: 20px auto; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <h2>Panel de Control - Barrios Team</h2>
+            <button onclick="cerrarSesion()" style="padding: 8px 15px; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer;">Cerrar Sesión</button>
         </div>
 
+        <!-- CONTADORES DE ESTADO (Dashboard) -->
+        <div class="dashboard-stats">
+            <div class="stat-card" style="background: #e9ecef; border-left: 5px solid #6c757d; color: #495057;">
+                Total Alumnos <span class="stat-number" id="count-total">0</span>
+            </div>
+            <div class="stat-card" style="background: #e6f9f0; border-left: 5px solid #2ec4b6; color: #1c7c73;">
+                Al Día (Activos) <span class="stat-number" id="count-aldia">0</span>
+            </div>
+            <div class="stat-card" style="background: #fff9e6; border-left: 5px solid #ffcc00; color: #997a00;">
+                Próximos a Vencer <span class="stat-number" id="count-proximos">0</span>
+            </div>
+            <div class="stat-card" style="background: #ffe6e6; border-left: 5px solid #ff4d4d; color: #b30000;">
+                Vencidos <span class="stat-number" id="count-vencidos">0</span>
+            </div>
+        </div>
+
+        <!-- SECCIÓN 1: CONFIGURAR MENSAJE DE WHATSAPP -->
+        <div class="admin-card">
+            <h3>Configuración del Mensaje de Recordatorio (WhatsApp)</h3>
+            <p style="font-size: 0.9em; color: #555;">Usa <code>{nombre}</code> y <code>{fecha}</code> para que el sistema complete automáticamente el nombre del alumno y su fecha de vencimiento.</p>
+            <textarea id="plantilla-ws" style="width: 100%; height: 70px; padding: 10px; margin: 10px 0;"></textarea>
+            <button onclick="guardarPlantillaWhatsApp()" style="background: #000; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer;">Guardar Mensaje</button>
+        </div>
+        
+        <!-- SECCIÓN 2: AÑADIR NUEVO ALUMNO -->
+        <div class="admin-card">
+            <h3>Añadir Nuevo Alumno</h3>
+            <form onsubmit="agregarAlumno(event)" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                <input type="text" id="nuevo_nombre" placeholder="Nombre" required style="padding: 8px;">
+                <input type="text" id="nuevo_apellido" placeholder="Apellido" required style="padding: 8px;">
+                <input type="tel" id="nuevo_telefono" placeholder="WhatsApp (ej: 54911...)" required style="padding: 8px;">
+                <div>
+                    <label style="font-size: 0.8em; display: block;">Fecha de Pago:</label>
+                    <input type="date" id="nuevo_pago" required style="padding: 8px;">
+                </div>
+                <div>
+                    <label style="font-size: 0.8em; display: block;">Vencimiento:</label>
+                    <input type="date" id="nuevo_vencimiento" required style="padding: 8px;">
+                </div>
+                <button type="submit" style="background: #000; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin-top: 15px;">Añadir Alumno</button>
+            </form>
+        </div>
+
+        <!-- SECCIÓN 3: LISTADO DE ALUMNOS -->
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <h3>Listado y Estado de Cuotas</h3>
+            <!-- Buscador en tiempo real -->
+            <input type="text" id="buscador" onkeyup="filtrarAlumnos()" placeholder="🔍 Buscar por nombre o apellido..." style="padding: 10px; width: 300px; border: 1px solid #aaa; border-radius: 4px;">
+        </div>
+        
         <table>
             <thead>
                 <tr>
                     <th>Nombre</th>
-                    <th>Apellido</th>
+                    <th>Teléfono</th>
                     <th>Fecha de Pago</th>
                     <th>Vencimiento</th>
-                    <th>Estado</th>
+                    <th>Estado / Alerta</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody id="tabla-alumnos">
-                <!-- Se llena con JS -->
+                <!-- Se llena automáticamente con JS -->
             </tbody>
         </table>
     </div>
 
-    <script src="js/admin.js"></script>
+     <script src="static/admin.js"></script>
 </body>
 </html>

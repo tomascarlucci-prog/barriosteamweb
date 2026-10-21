@@ -1,0 +1,229 @@
+const API_URL = "http://127.0.0.1:8000";
+
+// Mensaje por defecto para WhatsApp
+const MENSAJE_DEFAULT = "Hola {nombre}, te recordamos que tu cuota en Barrios Team vence el {fecha}. ¡Te esperamos en el entrenamiento!";
+
+document.addEventListener("DOMContentLoaded", () => {
+    // Verificar si ya hay sesión iniciada
+    if (localStorage.getItem("adminLogueado") === "true") {
+        mostrarPanel();
+    }
+});
+
+// 1. LOGIN DE ADMINISTRADOR
+function loginAdmin() {
+    const user = document.getElementById("username").value.trim();
+    const pass = document.getElementById("password").value.trim();
+
+    if (user === "admingustavo" && pass === "barrios2026") {
+        localStorage.setItem("adminLogueado", "true");
+        mostrarPanel();
+    } else {
+        alert("Usuario o contraseña incorrectos");
+    }
+}
+
+function cerrarSesion() {
+    localStorage.removeItem("adminLogueado");
+    document.getElementById("panel-section").classList.add("hidden");
+    document.getElementById("login-section").classList.remove("hidden");
+}
+
+function mostrarPanel() {
+    // 1. Ocultar login y mostrar panel de forma inmediata
+    const loginSec = document.getElementById("login-section");
+    const panelSec = document.getElementById("panel-section");
+    
+    if (loginSec) loginSec.classList.add("hidden");
+    if (panelSec) panelSec.classList.remove("hidden");
+    
+    // 2. Cargar plantilla de WhatsApp
+    const plantillaInput = document.getElementById("plantilla-ws");
+    if (plantillaInput) {
+        plantillaInput.value = localStorage.getItem("plantillaWS") || MENSAJE_DEFAULT;
+    }
+
+    // 3. Cargar alumnos
+    cargarAlumnos();
+}
+
+// 2. CONFIGURACIÓN DEL MENSAJE DE WHATSAPP
+function guardarPlantillaWhatsApp() {
+    const texto = document.getElementById("plantilla-ws").value;
+    localStorage.setItem("plantillaWS", texto);
+    alert("Plantilla de mensaje guardada correctamente.");
+}
+
+// 3. OBTENER ALUMNOS Y CALCULAR ESTADO/ALERTAS
+async function cargarAlumnos() {
+    try {
+        const response = await fetch(`${API_URL}/alumnos`);
+        if (!response.ok) throw new Error("Error al consultar la API");
+        
+        const alumnos = await response.json();
+        const tbody = document.getElementById("tabla-alumnos");
+        if (!tbody) return;
+        tbody.innerHTML = "";
+
+        const hoy = new Date();
+        hoy.setHours(0, 0, 0, 0);
+
+        // Variables para los contadores
+        let contTotal = alumnos.length;
+        let contAlDia = 0;
+        let contProximos = 0;
+        let contVencidos = 0;
+
+        alumnos.forEach(alumno => {
+            const fechaVenc = new Date(alumno.fecha_vencimiento);
+            fechaVenc.setHours(0, 0, 0, 0);
+
+            const diffTiempo = fechaVenc - hoy;
+            const diffDias = Math.ceil(diffTiempo / (1000 * 60 * 60 * 24));
+
+            let badgeHtml = "";
+            let requiereAviso = false;
+
+            // Calcular contadores y estados
+            if (diffDias < 0) {
+                badgeHtml = `<span class="badge-red">VENCIDO (${Math.abs(diffDias)} días)</span>`;
+                requiereAviso = true;
+                contVencidos++;
+            } else if (diffDias <= 5) {
+                badgeHtml = `<span class="badge-yellow">Vence en ${diffDias} día(s)</span>`;
+                requiereAviso = true;
+                contProximos++;
+            } else {
+                badgeHtml = `<span class="badge-green">Al día</span>`;
+                contAlDia++;
+            }
+
+            const plantilla = localStorage.getItem("plantillaWS") || MENSAJE_DEFAULT;
+            const mensajePersonalizado = plantilla
+                .replace("{nombre}", `${alumno.nombre} ${alumno.apellido}`)
+                .replace("{fecha}", alumno.fecha_vencimiento);
+            
+            const urlWhatsApp = `https://wa.me/${alumno.telefono}?text=${encodeURIComponent(mensajePersonalizado)}`;
+
+            const tr = document.createElement("tr");
+            tr.innerHTML = `
+                <td><strong>${alumno.nombre} ${alumno.apellido}</strong></td>
+                <td>${alumno.telefono || 'Sin número'}</td>
+                <td>${alumno.fecha_pago}</td>
+                <td><strong>${alumno.fecha_vencimiento}</strong></td>
+                <td>${badgeHtml}</td>
+                <td>
+                    <button onclick="renovarCuota('${alumno.id}')" class="btn-renovar">🔄 Renovar</button>
+                    ${requiereAviso ? `<a href="${urlWhatsApp}" target="_blank" class="btn-ws">📱 Aviso</a>` : ''}
+                    <button onclick="eliminarAlumno('${alumno.id}')" class="btn-danger">🗑️</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+
+        // Actualizar tarjetas de contadores visualmente
+        document.getElementById("count-total").innerText = contTotal;
+        document.getElementById("count-aldia").innerText = contAlDia;
+        document.getElementById("count-proximos").innerText = contProximos;
+        document.getElementById("count-vencidos").innerText = contVencidos;
+
+    } catch (error) {
+        console.error("Error al cargar alumnos (comprueba que Uvicorn esté corriendo):", error);
+    }
+}
+
+// 4. BUSCADOR EN TIEMPO REAL
+function filtrarAlumnos() {
+    const textoBuscado = document.getElementById("buscador").value.toLowerCase();
+    const filas = document.querySelectorAll("#tabla-alumnos tr");
+
+    filas.forEach(fila => {
+        // La celda [0] es la que contiene "Nombre Apellido"
+        const nombreCompleto = fila.cells[0].textContent.toLowerCase();
+        
+        if (nombreCompleto.includes(textoBuscado)) {
+            fila.style.display = ""; // Muestra la fila
+        } else {
+            fila.style.display = "none"; // Oculta la fila
+        }
+    });
+}
+
+// 5. AGREGAR UN NUEVO ALUMNO
+async function agregarAlumno(event) {
+    event.preventDefault();
+
+    const nuevoAlumno = {
+        nombre: document.getElementById("nuevo_nombre").value,
+        apellido: document.getElementById("nuevo_apellido").value,  // <-- Se agregó la coma que faltaba aquí
+        telefono: document.getElementById("nuevo_telefono").value,
+        email: "", 
+        fecha_pago: document.getElementById("nuevo_pago").value,
+        fecha_vencimiento: document.getElementById("nuevo_vencimiento").value
+    };
+
+    try {
+        const response = await fetch(`${API_URL}/alumnos`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(nuevoAlumno)
+        });
+
+        if (response.ok) {
+            alert("Alumno añadido correctamente");
+            document.getElementById("nuevo_nombre").value = "";
+            document.getElementById("nuevo_apellido").value = "";
+            document.getElementById("nuevo_telefono").value = "";
+            document.getElementById("nuevo_pago").value = "";
+            document.getElementById("nuevo_vencimiento").value = "";
+            cargarAlumnos();
+        } else {
+            const errorData = await response.json();
+            console.error("Detalle del error:", errorData);
+            alert("Error al guardar el alumno en la base de datos.");
+        }
+    } catch (error) {
+        console.error("Error en la solicitud:", error);
+        alert("No se pudo conectar con el servidor.");
+    }
+}
+
+// 6. RENOVAR CUOTA (+30 DÍAS)
+async function renovarCuota(id) {
+    if (!confirm("¿Renovar la cuota por 1 mes? Esto actualizará la fecha de pago a hoy y extenderá el vencimiento 30 días.")) return;
+
+    try {
+        const response = await fetch(`${API_URL}/alumnos/${id}/renovar`, {
+            method: "PUT"
+        });
+
+        if (response.ok) {
+            alert("✅ Cuota renovada exitosamente.");
+            cargarAlumnos(); // Refresca la tabla y los contadores
+        } else {
+            alert("Error al renovar la cuota.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+        alert("Falla de conexión con el servidor.");
+    }
+}
+
+// 7. ELIMINAR UN ALUMNO (BORRADO DEFINITIVO)
+async function eliminarAlumno(id) {
+    if (!confirm("⚠️ ¿Estás seguro de eliminar DEFINITIVAMENTE a este alumno?")) return;
+
+    try {
+        const response = await fetch(`${API_URL}/alumnos/${id}`, {
+            method: "DELETE"
+        });
+
+        if (response.ok) {
+            cargarAlumnos(); // Refresca la tabla tras eliminar
+        } else {
+            alert("No se pudo eliminar el alumno.");
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+}
