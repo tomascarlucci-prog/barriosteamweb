@@ -1,15 +1,16 @@
 {
-  "name": "Barrios Team Admin",
-  "short_name": "BarriosAdmin",
-  "start_url": "/admin.html",
-  "display": "standalone",
-  "background_color": "#111111",
-  "theme_color": "#111111",
+  "short_name": "Barrios Team",
+  "name": "Barrios Team - Panel Admin",
   "icons": [
     {
-      "src": "static/favicon.ico",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "static/barrioslogo.jpeg",
+      "type": "image/jpeg",
+      "sizes": "192x192 512x512",
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "start_url": "/static/admin.html",
+  "background_color": "#111111",
+  "theme_color": "#111111",
+  "display": "standalone"
 }

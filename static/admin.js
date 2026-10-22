@@ -1,26 +1,21 @@
-// CORRECCIÓN: Dejamos la URL vacía para que se adapte automáticamente a Render
 const API_URL = "";
 
 const MENSAJE_DEFAULT = "Hola {nombre}, te recordamos que tu cuota en Barrios Team vence el {fecha}. ¡Te esperamos en el entrenamiento!";
 
 document.addEventListener("DOMContentLoaded", () => {
-    // 1. Cargar plantilla de WhatsApp guardada
     const plantillaInput = document.getElementById("plantilla-ws");
     if (plantillaInput) {
         plantillaInput.value = localStorage.getItem("plantillaWS") || MENSAJE_DEFAULT;
     }
-    // 2. Cargar alumnos directamente (sin esperar un login)
     cargarAlumnos();
 });
 
-// CONFIGURACIÓN DEL MENSAJE DE WHATSAPP
 function guardarPlantillaWhatsApp() {
     const texto = document.getElementById("plantilla-ws").value;
     localStorage.setItem("plantillaWS", texto);
     alert("Plantilla de mensaje guardada correctamente.");
 }
 
-// OBTENER ALUMNOS Y CALCULAR ESTADO/ALERTAS
 async function cargarAlumnos() {
     try {
         const response = await fetch(`${API_URL}/alumnos`);
@@ -95,7 +90,6 @@ async function cargarAlumnos() {
     }
 }
 
-// BUSCADOR EN TIEMPO REAL
 function filtrarAlumnos() {
     const textoBuscado = document.getElementById("buscador").value.toLowerCase();
     const filas = document.querySelectorAll("#tabla-alumnos tr");
@@ -110,9 +104,8 @@ function filtrarAlumnos() {
     });
 }
 
-// AGREGAR UN NUEVO ALUMNO
 async function agregarAlumno(event) {
-    event.preventDefault(); // <- ESTO EVITA QUE SE BORREN LOS DATOS AL DAR ENTER
+    event.preventDefault(); 
 
     const nuevoAlumno = {
         nombre: document.getElementById("nuevo_nombre").value,
@@ -147,7 +140,6 @@ async function agregarAlumno(event) {
     }
 }
 
-// RENOVAR CUOTA (+30 DÍAS)
 async function renovarCuota(id) {
     if (!confirm("¿Renovar la cuota por 1 mes? Esto actualizará la fecha de pago a hoy y extenderá el vencimiento 30 días.")) return;
 
@@ -167,7 +159,6 @@ async function renovarCuota(id) {
     }
 }
 
-// ELIMINAR UN ALUMNO (BORRADO DEFINITIVO)
 async function eliminarAlumno(id) {
     if (!confirm("⚠️ ¿Estás seguro de eliminar DEFINITIVAMENTE a este alumno?")) return;
 
@@ -183,5 +174,35 @@ async function eliminarAlumno(id) {
         }
     } catch (error) {
         console.error("Error:", error);
+    }
+}
+
+// LÓGICA PARA BOTÓN DE INSTALACIÓN PWA
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    
+    const btnInstalar = document.getElementById('btn-instalar');
+    if (btnInstalar) {
+        btnInstalar.classList.remove('hidden');
+    }
+});
+
+async function instalarApp() {
+    if (!deferredPrompt) return;
+    
+    deferredPrompt.prompt();
+    
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+        console.log('El usuario aceptó instalar la app');
+    }
+    
+    deferredPrompt = null;
+    const btnInstalar = document.getElementById('btn-instalar');
+    if (btnInstalar) {
+        btnInstalar.classList.add('hidden');
     }
 }
