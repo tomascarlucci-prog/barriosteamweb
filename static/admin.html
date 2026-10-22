@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="manifest" href="manifest.json">
+    <link rel="manifest" href="../manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Barrios Team</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <!-- CORRECCIÓN: Ruta directa al CSS -->
+    <link rel="stylesheet" href="styles.css">
     <style>
         .hidden { display: none !important; }
         .badge-red { background-color: #ff4d4d; color: white; padding: 4px 8px; border-radius: 4px; font-weight: bold; }
@@ -18,7 +19,6 @@
         .btn-danger { background-color: #e63946; color: white; border: none; padding: 6px 10px; border-radius: 4px; cursor: pointer; font-weight: bold; }
         .admin-card { background: #f8f9fa; border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
         
-        /* Estilos del Dashboard de Contadores */
         .dashboard-stats { display: flex; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
         .stat-card { flex: 1; min-width: 150px; padding: 15px; border-radius: 8px; font-weight: bold; text-align: center; font-size: 1.1em; display: flex; flex-direction: column; }
         .stat-number { font-size: 1.8em; margin-top: 5px; }
@@ -37,7 +37,6 @@
             <button onclick="window.location.href='/'" style="padding: 8px 15px; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer;">Volver al Inicio</button>
         </div>
 
-        <!-- CONTADORES DE ESTADO (Dashboard) -->
         <div class="dashboard-stats">
             <div class="stat-card" style="background: #e9ecef; border-left: 5px solid #6c757d; color: #495057;">
                 Total Alumnos <span class="stat-number" id="count-total">0</span>
@@ -53,7 +52,6 @@
             </div>
         </div>
 
-        <!-- SECCIÓN 1: CONFIGURAR MENSAJE DE WHATSAPP -->
         <div class="admin-card">
             <h3>Configuración del Mensaje de Recordatorio (WhatsApp)</h3>
             <p style="font-size: 0.9em; color: #555;">Usa <code>{nombre}</code> y <code>{fecha}</code> para que el sistema complete automáticamente el nombre del alumno y su fecha de vencimiento.</p>
@@ -61,7 +59,6 @@
             <button onclick="guardarPlantillaWhatsApp()" style="background: #000; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer;">Guardar Mensaje</button>
         </div>
         
-        <!-- SECCIÓN 2: AÑADIR NUEVO ALUMNO -->
         <div class="admin-card">
             <h3>Añadir Nuevo Alumno</h3>
             <form onsubmit="agregarAlumno(event)" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
@@ -80,10 +77,8 @@
             </form>
         </div>
 
-        <!-- SECCIÓN 3: LISTADO DE ALUMNOS -->
         <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
             <h3>Listado y Estado de Cuotas</h3>
-            <!-- Buscador en tiempo real -->
             <input type="text" id="buscador" onkeyup="filtrarAlumnos()" placeholder="🔍 Buscar por nombre o apellido..." style="padding: 10px; width: 300px; border: 1px solid #aaa; border-radius: 4px;">
         </div>
         
@@ -104,6 +99,7 @@
         </table>
     </div>
 
-    <script src="static/admin.js"></script>
+    <!-- CORRECCIÓN: Ruta directa al JS -->
+    <script src="admin.js"></script>
 </body>
 </html>

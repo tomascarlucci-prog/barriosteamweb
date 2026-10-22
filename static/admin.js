@@ -1,60 +1,26 @@
-const API_URL = "http://127.0.0.1:8000";
+// CORRECCIÓN: Dejamos la URL vacía para que se adapte automáticamente a Render
+const API_URL = "";
 
-// Mensaje por defecto para WhatsApp
 const MENSAJE_DEFAULT = "Hola {nombre}, te recordamos que tu cuota en Barrios Team vence el {fecha}. ¡Te esperamos en el entrenamiento!";
 
 document.addEventListener("DOMContentLoaded", () => {
-    // Verificar si ya hay sesión iniciada
-    if (localStorage.getItem("adminLogueado") === "true") {
-        mostrarPanel();
-    }
-});
-
-// 1. LOGIN DE ADMINISTRADOR
-function loginAdmin() {
-    const user = document.getElementById("username").value.trim();
-    const pass = document.getElementById("password").value.trim();
-
-    if (user === "admingustavo" && pass === "barrios2026") {
-        localStorage.setItem("adminLogueado", "true");
-        mostrarPanel();
-    } else {
-        alert("Usuario o contraseña incorrectos");
-    }
-}
-
-function cerrarSesion() {
-    localStorage.removeItem("adminLogueado");
-    document.getElementById("panel-section").classList.add("hidden");
-    document.getElementById("login-section").classList.remove("hidden");
-}
-
-function mostrarPanel() {
-    // 1. Ocultar login y mostrar panel de forma inmediata
-    const loginSec = document.getElementById("login-section");
-    const panelSec = document.getElementById("panel-section");
-    
-    if (loginSec) loginSec.classList.add("hidden");
-    if (panelSec) panelSec.classList.remove("hidden");
-    
-    // 2. Cargar plantilla de WhatsApp
+    // 1. Cargar plantilla de WhatsApp guardada
     const plantillaInput = document.getElementById("plantilla-ws");
     if (plantillaInput) {
         plantillaInput.value = localStorage.getItem("plantillaWS") || MENSAJE_DEFAULT;
     }
-
-    // 3. Cargar alumnos
+    // 2. Cargar alumnos directamente (sin esperar un login)
     cargarAlumnos();
-}
+});
 
-// 2. CONFIGURACIÓN DEL MENSAJE DE WHATSAPP
+// CONFIGURACIÓN DEL MENSAJE DE WHATSAPP
 function guardarPlantillaWhatsApp() {
     const texto = document.getElementById("plantilla-ws").value;
     localStorage.setItem("plantillaWS", texto);
     alert("Plantilla de mensaje guardada correctamente.");
 }
 
-// 3. OBTENER ALUMNOS Y CALCULAR ESTADO/ALERTAS
+// OBTENER ALUMNOS Y CALCULAR ESTADO/ALERTAS
 async function cargarAlumnos() {
     try {
         const response = await fetch(`${API_URL}/alumnos`);
@@ -68,7 +34,6 @@ async function cargarAlumnos() {
         const hoy = new Date();
         hoy.setHours(0, 0, 0, 0);
 
-        // Variables para los contadores
         let contTotal = alumnos.length;
         let contAlDia = 0;
         let contProximos = 0;
@@ -84,7 +49,6 @@ async function cargarAlumnos() {
             let badgeHtml = "";
             let requiereAviso = false;
 
-            // Calcular contadores y estados
             if (diffDias < 0) {
                 badgeHtml = `<span class="badge-red">VENCIDO (${Math.abs(diffDias)} días)</span>`;
                 requiereAviso = true;
@@ -121,41 +85,38 @@ async function cargarAlumnos() {
             tbody.appendChild(tr);
         });
 
-        // Actualizar tarjetas de contadores visualmente
         document.getElementById("count-total").innerText = contTotal;
         document.getElementById("count-aldia").innerText = contAlDia;
         document.getElementById("count-proximos").innerText = contProximos;
         document.getElementById("count-vencidos").innerText = contVencidos;
 
     } catch (error) {
-        console.error("Error al cargar alumnos (comprueba que Uvicorn esté corriendo):", error);
+        console.error("Error al cargar alumnos:", error);
     }
 }
 
-// 4. BUSCADOR EN TIEMPO REAL
+// BUSCADOR EN TIEMPO REAL
 function filtrarAlumnos() {
     const textoBuscado = document.getElementById("buscador").value.toLowerCase();
     const filas = document.querySelectorAll("#tabla-alumnos tr");
 
     filas.forEach(fila => {
-        // La celda [0] es la que contiene "Nombre Apellido"
         const nombreCompleto = fila.cells[0].textContent.toLowerCase();
-        
         if (nombreCompleto.includes(textoBuscado)) {
-            fila.style.display = ""; // Muestra la fila
+            fila.style.display = ""; 
         } else {
-            fila.style.display = "none"; // Oculta la fila
+            fila.style.display = "none"; 
         }
     });
 }
 
-// 5. AGREGAR UN NUEVO ALUMNO
+// AGREGAR UN NUEVO ALUMNO
 async function agregarAlumno(event) {
-    event.preventDefault();
+    event.preventDefault(); // <- ESTO EVITA QUE SE BORREN LOS DATOS AL DAR ENTER
 
     const nuevoAlumno = {
         nombre: document.getElementById("nuevo_nombre").value,
-        apellido: document.getElementById("nuevo_apellido").value,  // <-- Se agregó la coma que faltaba aquí
+        apellido: document.getElementById("nuevo_apellido").value,
         telefono: document.getElementById("nuevo_telefono").value,
         email: "", 
         fecha_pago: document.getElementById("nuevo_pago").value,
@@ -178,8 +139,6 @@ async function agregarAlumno(event) {
             document.getElementById("nuevo_vencimiento").value = "";
             cargarAlumnos();
         } else {
-            const errorData = await response.json();
-            console.error("Detalle del error:", errorData);
             alert("Error al guardar el alumno en la base de datos.");
         }
     } catch (error) {
@@ -188,7 +147,7 @@ async function agregarAlumno(event) {
     }
 }
 
-// 6. RENOVAR CUOTA (+30 DÍAS)
+// RENOVAR CUOTA (+30 DÍAS)
 async function renovarCuota(id) {
     if (!confirm("¿Renovar la cuota por 1 mes? Esto actualizará la fecha de pago a hoy y extenderá el vencimiento 30 días.")) return;
 
@@ -199,17 +158,16 @@ async function renovarCuota(id) {
 
         if (response.ok) {
             alert("✅ Cuota renovada exitosamente.");
-            cargarAlumnos(); // Refresca la tabla y los contadores
+            cargarAlumnos(); 
         } else {
             alert("Error al renovar la cuota.");
         }
     } catch (error) {
         console.error("Error:", error);
-        alert("Falla de conexión con el servidor.");
     }
 }
 
-// 7. ELIMINAR UN ALUMNO (BORRADO DEFINITIVO)
+// ELIMINAR UN ALUMNO (BORRADO DEFINITIVO)
 async function eliminarAlumno(id) {
     if (!confirm("⚠️ ¿Estás seguro de eliminar DEFINITIVAMENTE a este alumno?")) return;
 
@@ -219,7 +177,7 @@ async function eliminarAlumno(id) {
         });
 
         if (response.ok) {
-            cargarAlumnos(); // Refresca la tabla tras eliminar
+            cargarAlumnos();
         } else {
             alert("No se pudo eliminar el alumno.");
         }
