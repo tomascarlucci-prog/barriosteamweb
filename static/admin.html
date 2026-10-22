@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <link rel="manifest" href="../manifest.json">
+    <link rel="manifest" href="manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - Barrios Team</title>
@@ -29,6 +29,94 @@
 </head>
 <body>
 
+    <!-- PANEL DE CONTROL PRINCIPAL -->
+    <div class="admin-container" id="panel-section" style="max-width: 1200px; margin: 20px auto; padding: 20px;">
+        
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px;">
+            <h2>Panel de Control - Barrios Team</h2>
+            <div>
+                <!-- Botón de instalación de la PWA -->
+                <button id="btn-instalar" class="hidden" onclick="instalarApp()" style="padding: 8px 15px; background: #25d366; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; margin-right: 10px;">📲 Instalar App</button>
+                <button onclick="window.location.href='/'" style="padding: 8px 15px; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer;">Volver al Inicio</button>
+            </div>
+        </div>
+
+        <div class="dashboard-stats">
+            <div class="stat-card" style="background: #e9ecef; border-left: 5px solid #6c757d; color: #495057;">
+                Total Alumnos <span class="stat-number" id="count-total">0</span>
+            </div>
+            <div class="stat-card" style="background: #e6f9f0; border-left: 5px solid #2ec4b6; color: #1c7c73;">
+                Al Día (Activos) <span class="stat-number" id="count-aldia">0</span>
+            </div>
+            <div class="stat-card" style="background: #fff9e6; border-left: 5px solid #ffcc00; color: #997a00;">
+                Próximos a Vencer <span class="stat-number" id="count-proximos">0</span>
+            </div>
+            <div class="stat-card" style="background: #ffe6e6; border-left: 5px solid #ff4d4d; color: #b30000;">
+                Vencidos <span class="stat-number" id="count-vencidos">0</span>
+            </div>
+        </div>
+
+        <div class="admin-card">
+            <h3>Configuración del Mensaje de Recordatorio (WhatsApp)</h3>
+            <p style="font-size: 0.9em; color: #555;">Usa <code>{nombre}</code> y <code>{fecha}</code> para que el sistema complete automáticamente el nombre del alumno y su fecha de vencimiento.</p>
+            <textarea id="plantilla-ws" style="width: 100%; height: 70px; padding: 10px; margin: 10px 0;"></textarea>
+            <button onclick="guardarPlantillaWhatsApp()" style="background: #000; color: white; padding: 8px 15px; border: none; border-radius: 4px; cursor: pointer;">Guardar Mensaje</button>
+        </div>
+        
+        <div class="admin-card">
+            <h3>Añadir Nuevo Alumno</h3>
+            <form onsubmit="agregarAlumno(event)" style="display: flex; gap: 10px; flex-wrap: wrap; align-items: center;">
+                <input type="text" id="nuevo_nombre" placeholder="Nombre" required style="padding: 8px;">
+                <input type="text" id="nuevo_apellido" placeholder="Apellido" required style="padding: 8px;">
+                <input type="tel" id="nuevo_telefono" placeholder="WhatsApp (ej: 54911...)" required style="padding: 8px;">
+                <div>
+                    <label style="font-size: 0.8em; display: block;">Fecha de Pago:</label>
+                    <input type="date" id="nuevo_pago" required style="padding: 8px;">
+                </div>
+                <div>
+                    <label style="font-size: 0.8em; display: block;">Vencimiento:</label>
+                    <input type="date" id="nuevo_vencimiento" required style="padding: 8px;">
+                </div>
+                <button type="submit" style="background: #000; color: white; padding: 10px 15px; border: none; border-radius: 4px; cursor: pointer; margin-top: 15px;">Añadir Alumno</button>
+            </form>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+            <h3>Listado y Estado de Cuotas</h3>
+            <input type="text" id="buscador" onkeyup="filtrarAlumnos()" placeholder="🔍 Buscar por nombre o apellido..." style="padding: 10px; width: 300px; border: 1px solid #aaa; border-radius: 4px;">
+        </div>
+        
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Fecha de Pago</th>
+                    <th>Vencimiento</th>
+                    <th>Estado / Alerta</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="tabla-alumnos">
+                <!-- Se llena automáticamente con JS -->
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SCRIPTS AL FINAL DEL BODY -->
+    <script src="admin.js"></script>
+    <script>
+        // Registrar el Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(reg => console.log('Service Worker registrado', reg))
+                    .catch(err => console.log('Error al registrar SW', err));
+            });
+        }
+    </script>
+</body>
+</html>
     <!-- PANEL DE CONTROL PRINCIPAL -->
     <div class="admin-container" id="panel-section" style="max-width: 1200px; margin: 20px auto; padding: 20px;">
         
