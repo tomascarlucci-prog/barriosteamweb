@@ -30,26 +30,11 @@
 </head>
 <body>
 
-    <!-- MODAL / SECCIÓN DE LOGIN -->
-    <div class="admin-container" id="login-section" style="max-width: 400px; margin: 50px auto; padding: 20px; border: 1px solid #ccc; border-radius: 8px;">
-        <h2 style="color:#d32f2f; text-align: center; margin-bottom: 15px;">Acceso Administrador</h2>
-        
-        <div style="margin-bottom: 15px;">
-            <label>Usuario:</label>
-            <input type="text" id="username" placeholder="Usuario admin" style="width: 100%; padding: 10px; margin-top: 5px;">
-        </div>
-        <div style="margin-bottom: 20px;">
-            <label>Contraseña:</label>
-            <input type="password" id="password" placeholder="••••••••" style="width: 100%; padding: 10px; margin-top: 5px;" onkeypress="if(event.key === 'Enter') loginAdmin()">
-        </div>
-        <button type="button" onclick="loginAdmin()" class="btn" style="width: 100%; padding: 10px; background: #000; color: white; cursor: pointer; font-weight: bold;">Ingresar al Panel</button>
-    </div>
-    
     <!-- PANEL DE CONTROL PRINCIPAL -->
-    <div class="admin-container hidden" id="panel-section" style="max-width: 1200px; margin: 20px auto; padding: 20px;">
+    <div class="admin-container" id="panel-section" style="max-width: 1200px; margin: 20px auto; padding: 20px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <h2>Panel de Control - Barrios Team</h2>
-            <button onclick="cerrarSesion()" style="padding: 8px 15px; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer;">Cerrar Sesión</button>
+            <button onclick="window.location.href='/'" style="padding: 8px 15px; background: #333; color: white; border: none; border-radius: 4px; cursor: pointer;">Volver al Inicio</button>
         </div>
 
         <!-- CONTADORES DE ESTADO (Dashboard) -->
@@ -119,6 +104,6 @@
         </table>
     </div>
 
-     <script src="static/admin.js"></script>
+    <script src="static/admin.js"></script>
 </body>
 </html>
