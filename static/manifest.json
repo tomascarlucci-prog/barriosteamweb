@@ -1,18 +1,19 @@
 {
+  "id": "/static/admin.html",
   "short_name": "Barrios Team",
   "name": "Barrios Team - Panel Admin",
   "icons": [
     {
-      "src": "barrioslogo.jpeg",
-      "type": "image/jpeg",
-      "sizes": "192x192",
-      "purpose": "any maskable"
+      "src": "BARRIOSLOGOPNG.png",
+      "type": "image/png",
+      "sizes": "720x739",
+      "purpose": "any"
     },
     {
-      "src": "barrioslogo.jpeg",
-      "type": "image/jpeg",
-      "sizes": "512x512",
-      "purpose": "any maskable"
+      "src": "BARRIOSLOGOPNG.png",
+      "type": "image/png",
+      "sizes": "192x192 512x512",
+      "purpose": "any"
     }
   ],
   "start_url": "/static/admin.html",
