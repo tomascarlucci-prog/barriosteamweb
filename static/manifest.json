@@ -3,7 +3,7 @@
   "name": "Barrios Team - Panel Admin",
   "icons": [
     {
-      "src": "static/barrioslogo.jpeg",
+      "src": "barrioslogo.jpeg",
       "type": "image/jpeg",
       "sizes": "192x192 512x512",
       "purpose": "any maskable"
